@@ -1,2 +1,50 @@
-# Qt-Simulation
-一个使用Qt开发的仿真环境，模拟2D平面中小车利用摄像头或者雷达进行建图并且避障
+# Lidar Simulator
+
+This program demonstrates the whole process of using lidar to construct a map.
+
+## Prerequisites
+
+We have tested in Ubuntu 18.04, but it should be easy to compile in other platforms.
+
+#### QT4
+
+You can install qt4 in Ubuntu by:
+
+```bash
+sudo apt-get install libqt4-dev libqt4-opengl-dev qtcreator
+```
+
+## Compile:
+
+```bash
+qmake-qt4 Simulation.pro
+make
+```
+
+## Usage:
+
+you can run this program by:
+
+```bash
+./Simulation
+```
+
+**Keyboard:**
+
+- `up_arrow` - move forward
+- `down_arrow` - move backward
+- `left_arrow` - turn left
+- `right_arrow` - turn right
+
+**Mouse:**
+
+- `Right click` - remove obstacles
+- `Left click` - add obstacles
+
+##  Screenshot
+
+![](./doc/testA.png)
+
+![](./doc/testB.png)
+
+![](./doc/testC.png)
