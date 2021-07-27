@@ -35,7 +35,7 @@ void Lidar::update_lidarMap(int cx, int cy, RMap &map)
         }
     }
 
-    double step = 0.008;//步长，确定雷达扫描的精度
+    double step = 0.015;//步长，确定雷达扫描的精度
     int x_0 = 200;//中心点
     int y_0 = 200;//中心点
 
@@ -47,17 +47,17 @@ void Lidar::update_lidarMap(int cx, int cy, RMap &map)
 
         for (int i = 0; i < 284; i += 1)
         {
-            x = x_0 + i * cos(angle);
-            y = y_0 + i * sin(angle);
+            x = x_0 + i * cos(angle) + 8;
+            y = y_0 + i * sin(angle) + 8;
 
             if (x > 400 || y > 400 || x < 0 || y < 0)
                 break;
 
             if (originMap->query(x / 50, y / 50))
             {
-                //TODO 这里的调整与小车的长和宽有关
-                m = (x - car_y + cy * 50 + 24) / 4;
-                n = (y - car_x + cx * 50 + 24) / 4;
+                //这里的调整与小车的长和宽有关
+                m = (x - car_y + cy * 50 + 20) / 4;
+                n = (y - car_x + cx * 50 + 20) / 4;
 
                 this->lidarMap->addIN(m, n);
                 break;
@@ -66,9 +66,6 @@ void Lidar::update_lidarMap(int cx, int cy, RMap &map)
     }
 }
 
-//TODO 如何解决坐标漂移的问题，以及如何解决建图质量不好的问题,目前右边和下边的建图效果最差。
-// 问题出在update_lidarMap()上面，这个算法是只有小车走了一大格后地图才会刷新，才会认为小车是前进了。
-// 建图的核心代码在这里，如何调整代码的框架？？？
 void Lidar::buildMap()
 {
     //没有移动或者移动很小（比如原地旋转导致的移动）则不更新地图
@@ -77,16 +74,16 @@ void Lidar::buildMap()
 
     //把雷达扫描的障碍物更新到地图中，
     int fix = 0;
-    for (int i = 0; i < lidarMap->getCol(); i = i + 2)
+    for (int i = 0; i < lidarMap->getCol(); i = i + 1)
     {
-        for (int j = 0; j < lidarMap->getRow(); j = j + 2)
+        for (int j = 0; j < lidarMap->getRow(); j = j + 1)
         {
             //模拟界面中的障碍物坐标
             int x = car_x + 4 * (i - 50);
             int y = car_y + 4 * (j - 50);
             //转化为保存的地图中的坐标
-            x = x / 4 - 5;
-            y = y / 4 - 5;
+            x = x / 4.0 - 4.8;
+            y = y / 4.0 - 5.0;
             if (x >= 0 && x < bMap->getCol() && y >= 0 && y < bMap->getRow())
             {
                 if (lidarMap->query(i, j))

@@ -1,6 +1,5 @@
 #include "include/console.h"
 #include "include/logprinter.h"
-#include "include/lidar.h"
 #include "include/mapper.h"
 #include "include/simulator.h"
 #include <QApplication>
@@ -87,14 +86,18 @@ void Console::on_exit_clicked()
 void Console::on_creatMap_clicked()
 {
     Simulator::getSimulator()->creatNewMap();
-    Simulator::getSimulator()->repaint();
+    Simulator::getSimulator()->reBuildMap();
+    Simulator::getSimulator()->update();
+    Mapper::getMapper()->update();
     LogPrinter::getLogPrinter()->printLog("成功创建随机地图！");
 }
 
 void Console::on_clearMap_clicked()
 {
     Simulator::getSimulator()->clearMap();
-    Simulator::getSimulator()->repaint();
+    Simulator::getSimulator()->reBuildMap();
+    Simulator::getSimulator()->update();
+    Mapper::getMapper()->update();
     LogPrinter::getLogPrinter()->printLog("成功清空地图！");
 }
 
@@ -138,7 +141,7 @@ void Console::on_saveBuildMap_clicked()
 void Console::on_reBuildMap_clicked()
 {
     Simulator::getSimulator()->reBuildMap();
-    Mapper::getMapper()->repaint();
+    Mapper::getMapper()->update();
     LogPrinter::getLogPrinter()->printLog("开始重新建图！");
 }
 
@@ -168,7 +171,9 @@ void Console::on_loadMap_clicked()
     if (Simulator::getSimulator()->loadMap(fileName.toStdString()))
     {
         LogPrinter::getLogPrinter()->printLog("地图已加载！");
+        Simulator::getSimulator()->reBuildMap();
         Simulator::getSimulator()->update();
+        Mapper::getMapper()->update();
     }
     else
         LogPrinter::getLogPrinter()->printLog("地图加载失败！");
