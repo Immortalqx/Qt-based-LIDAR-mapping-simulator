@@ -1,4 +1,4 @@
-# Lidar Simulator
+# Qt-based LIDAR Mapping Simulator
 
 This program demonstrates the whole process of using lidar to construct a map.
 
