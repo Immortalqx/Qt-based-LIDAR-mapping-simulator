@@ -6,6 +6,7 @@
 
 QT       += core gui
 
+# 如果 QT 版本大于 4（Qt5 或更高版本），则需要添加 widgets 模块，该模块包含所有控件类。
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Simulation

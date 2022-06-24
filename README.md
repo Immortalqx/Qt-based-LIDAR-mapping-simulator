@@ -6,18 +6,18 @@ This program demonstrates the whole process of using lidar to construct a map.
 
 We have tested in Ubuntu 18.04, but it should be easy to compile in other platforms.
 
-#### QT4
+#### QT5
 
 You can install qt4 in Ubuntu by:
 
 ```bash
-sudo apt-get install libqt4-dev libqt4-opengl-dev qtcreator
+sudo apt-get install qt5-default qtcreator
 ```
 
 ## Compile:
 
 ```bash
-qmake-qt4 Simulation.pro
+qmake Simulation.pro
 make
 ```
 
